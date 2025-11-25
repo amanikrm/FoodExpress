@@ -26,16 +26,39 @@ const Body = () => {
     );
     const json = await data.json();
 
-    // console.log(
-    //   json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants
-    // );
+    // console.log(json);
 
-    setlistOfRestaurants(
-      json.data.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setfilteredRestaurant(
-      json.data.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
+    // Recursive function to find the 'restaurants' array in the JSON structure
+    const findRestaurants = (obj) => {
+      if (!obj) return null;
+      
+      // Check if the current object has the 'restaurants' key which is an array
+      if (obj.hasOwnProperty('restaurants') && Array.isArray(obj.restaurants) && obj.restaurants.length > 0) {
+        return obj.restaurants;
+      }
+
+      // If it's an array, iterate through its elements
+      if (Array.isArray(obj)) {
+        for (let item of obj) {
+          const result = findRestaurants(item);
+          if (result) return result;
+        }
+      } 
+      // If it's an object, iterate through its keys
+      else if (typeof obj === 'object') {
+        for (let key in obj) {
+          const result = findRestaurants(obj[key]);
+          if (result) return result;
+        }
+      }
+
+      return null;
+    };
+
+    const restaurants = findRestaurants(json?.data?.cards);
+
+    setlistOfRestaurants(restaurants);
+    setfilteredRestaurant(restaurants);
   };
 
   if (!useOnlineStatus()) {
@@ -60,23 +83,20 @@ const Body = () => {
   }
 
   return (
-    <div className="body">
-      <div className="filter flex">
-        <div className="search m-4 p-4">
-          {/* <p>{console.log("shimmer", listOfRestaurants.length)}</p> */}
+    <div className="body max-w-7xl mx-auto px-4 pb-12">
+      <div className="filter flex flex-col md:flex-row justify-between items-center py-8 gap-4">
+        <div className="search w-full md:w-auto flex flex-col sm:flex-row items-center gap-4">
           <input
             type="text"
-            placeholder="Enter Restaurant Name Here"
-            className="placeholder-gray-500 border border-solid border-black rounded-4xl px-3 py-1.5 w-[350px]"
+            placeholder="Search for restaurants..."
+            className="border border-gray-300 rounded-full px-6 py-2 w-full sm:w-80 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
           />
           <button
-            className="px-4 py-2 bg-green-100 m-4 rounded-lg hover:bg-green-200 hover:border-red-400"
-            // styled button class
-            // className="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded m-4 p-4"
+            className="px-6 py-2 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-colors shadow-sm w-full sm:w-auto"
             onClick={() => {
               console.log(searchText);
               const filteredRestaurant = listOfRestaurants.filter((res) =>
@@ -89,11 +109,10 @@ const Body = () => {
             Search
           </button>
         </div>
-        <div className="search m-4 p-4 flex items-center">
+        
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
           <button
-            className="px-4 py-2 bg-amber-100 rounded-lg hover:bg-amber-200"
-            // styled button class
-            // className="bg-transparent hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded"
+            className="px-6 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors border border-gray-200 w-full sm:w-auto font-medium"
             onClick={() => {
               const filteredList = listOfRestaurants.filter(
                 (res) => res.info.avgRating > 4
@@ -101,35 +120,33 @@ const Body = () => {
               setfilteredRestaurant(filteredList);
             }}
           >
-            Top Rated Restaurants
+            Top Rated
           </button>
-        </div>
-        <div className="m-4 p-4 flex items-center">
-          <input
-            type="text"
-            placeholder="Enter UserName Here"
-            className="placeholder-gray-500 border border-solid border-black rounded-4xl px-3 py-1.5 w-[350px]"
-            value={newUserName}
-            onChange={(e) => setNewUserName(e.target.value)}
-          />
-          <button
-            className="mx-4 px-4 py-2 bg-amber-100 rounded-lg hover:bg-amber-200"
-            // styled button class
-            // className="bg-transparent hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded"
-            onClick={() => setUserName(newUserName)}
-          >
-            Change Context Btn
-          </button>
-        </div>
 
-        {/* <div className="search m-4 p-4 flex items-center">
-        </div> */}
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <input
+              type="text"
+              placeholder="Username"
+              className="border border-gray-300 rounded-full px-4 py-2 w-full sm:w-40 focus:outline-none focus:border-orange-500 transition-all"
+              value={newUserName}
+              onChange={(e) => setNewUserName(e.target.value)}
+            />
+            <button
+              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors border border-gray-200 w-full sm:w-auto font-medium"
+              onClick={() => setUserName(newUserName)}
+            >
+              Set User
+            </button>
+          </div>
+        </div>
       </div>
-      <div className="flex flex-wrap">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {filteredRestaurant.map((restaurant) => (
           <Link
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
+            className="transform hover:scale-105 transition-transform duration-200"
           >
             {
               /* {Promote those restaurants which having the averageRating below 4.3 .} */

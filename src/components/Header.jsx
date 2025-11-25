@@ -16,33 +16,43 @@ const Header = () => {
   // console.log(cartItems);
 
   return (
-    <div className="flex justify-between bg-pink-100 shadow-lg sm:bg-amber-100 lg:bg-amber-100">
-      <div className="logo-container flex">
-        <img className="w-25" src={LOGO} />
+    <div className="flex flex-col md:flex-row justify-between bg-white shadow-md sticky top-0 z-50 px-4 md:px-8 py-2">
+      <div className="logo-container flex justify-center md:justify-start items-center">
+        <Link to="/">
+          <img className="w-24 hover:scale-105 transition-transform duration-200" src={LOGO} alt="FoodExpress Logo" />
+        </Link>
       </div>
-      <div className="flex items-center">
-        <ul className="flex p-4 m-4">
-          <li className="px-4 mx-1 flex items-center bg-amber-300 rounded-2xl">
-            {onlineText} : {onlineStatus ? "🟢" : "🔴"}
+      <div className="flex items-center justify-center">
+        <ul className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-gray-700 font-medium">
+          <li className="flex items-center gap-2">
+            <span className={onlineStatus ? "text-green-500" : "text-red-500"}>●</span>
+            {onlineStatus ? "Online" : "Offline"}
           </li>
-          <li className="px-4 mx-1 flex items-center hover:bg-amber-300 rounded-2xl">
+          <li className="hover:text-orange-500 transition-colors duration-200">
             <Link to="/">Home</Link>
           </li>
-          <li className="px-4 mx-1 flex items-center hover:bg-amber-300 rounded-2xl">
+          <li className="hover:text-orange-500 transition-colors duration-200">
             <Link to="/about">About Us</Link>
           </li>
-          <li className="px-4 mx-1 flex items-center hover:bg-amber-300 rounded-2xl">
+          <li className="hover:text-orange-500 transition-colors duration-200">
             <Link to="/contact">Contact Us</Link>
           </li>
-          <li className="px-4 mx-1 flex items-center hover:bg-amber-300 rounded-2xl">
+          <li className="hover:text-orange-500 transition-colors duration-200">
             <Link to="/grocery">Grocery</Link>
           </li>
-          <li className="px-4 mx-1 flex items-center hover:bg-amber-300 rounded-2xl">
-            <Link to="/cart">Cart ({cartItems.length})</Link>
+          <li className="hover:text-orange-500 transition-colors duration-200 font-bold flex items-center gap-1">
+            <Link to="/cart">
+              Cart
+              {cartItems.length > 0 && (
+                <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full ml-1">
+                  {cartItems.length}
+                </span>
+              )}
+            </Link>
           </li>
-          <li className="px-4 mx-1 flex items-center">
+          <li>
             <button
-              className="login-btn border border-black px-4 py-1 bg-amber-300 rounded-2xl font-semibold hover:bg-amber-400 cursor-pointer"
+              className="login-btn px-6 py-2 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-colors duration-200 shadow-sm hover:shadow-md"
               onClick={() => {
                 loginBtn === "Login"
                   ? setLoginBtn("Logout")
@@ -52,7 +62,7 @@ const Header = () => {
               {loginBtn}
             </button>
           </li>
-          <li className="px-4 mx-1 flex items-center bg-amber-300 rounded-2xl font-bold">
+          <li className="font-bold text-orange-600">
             {loggedInUser}
           </li>
         </ul>

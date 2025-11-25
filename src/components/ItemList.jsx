@@ -14,12 +14,12 @@ const ItemList = ({ items }) => {
       {items.map((item) => (
         <div
           key={item.card.info.id}
-          className="m-2 p-2 border-gray-200 border-b-2 text-left flex"
+          className="flex justify-between items-start p-6 border-b border-gray-100 last:border-b-0"
         >
-          <div className="w-9/12">
-            <div className="p-2">
-              <p className="text-lg font-bold">{item.card.info.name} </p>
-              <p className="font-light">
+          <div className="w-9/12 pr-4">
+            <div className="py-2">
+              <p className="text-lg font-bold text-gray-800 mb-1">{item.card.info.name}</p>
+              <p className="font-medium text-gray-700 mb-2">
                 ₹
                 {item.card.info.price
                   ? item.card.info.price / 100
@@ -27,22 +27,25 @@ const ItemList = ({ items }) => {
                     Math.floor(Math.random() * 999) + 100}
               </p>
             </div>
-            <p className="text-xs font-light p-2">
+            <p className="text-sm text-gray-500 leading-relaxed">
               {item.card.info.description}
             </p>
           </div>
-          <div className="relative w-3/12 bg-gray-200 rounded-lg mr-4 flex items-center justify-center text-gray-400 ">
+          <div className="relative w-3/12">
             {item.card.info.imageId ? (
               <img
                 src={CDN_URL + item.card.info.imageId}
-                className="rounded-lg"
+                className="w-full h-32 object-cover rounded-xl shadow-sm"
+                alt={item.card.info.name}
               />
             ) : (
-              "IMAGE"
+              <div className="w-full h-32 bg-gray-100 rounded-xl flex items-center justify-center text-gray-400 text-xs">
+                NO IMAGE
+              </div>
             )}
-            <div className="absolute bottom-0">
+            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
               <button
-                className="cursor-pointer border border-green-950 text-green-900 bg-white hover:bg-gray-200 font-bold px-4 py-2 rounded-xl"
+                className="bg-white text-green-600 font-bold px-8 py-2 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow uppercase text-sm whitespace-nowrap"
                 onClick={() => handleAddItem(item)}
               >
                 ADD

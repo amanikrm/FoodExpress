@@ -10,17 +10,19 @@ const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
 
   return (
     <div>
-      <div className="w-6/12 bg-gray-50 shadow-lg p-4 mx-auto my-4 flex-row items-center">
+      <div className="w-full bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden mb-4">
         <div
-          className="flex justify-between cursor-pointer"
+          className="flex justify-between items-center p-6 cursor-pointer bg-white hover:bg-gray-50 transition-colors"
           onClick={handleClick}
         >
-          <span className="font-extrabold text-lg">
+          <span className="font-bold text-xl text-gray-800">
             {data.title} ({data.itemCards.length})
           </span>
-          <span>🔽</span>
+          <span className={`transform transition-transform duration-300 ${showItems ? 'rotate-180' : ''}`}>
+            🔽
+          </span>
         </div>
-        <div>{showItems && <ItemList items={data.itemCards} />}</div>
+        {showItems && <ItemList items={data.itemCards} />}
       </div>
     </div>
   );

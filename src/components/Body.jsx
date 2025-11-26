@@ -1,4 +1,5 @@
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
+import { resList } from "../utils/mockData";
 import { useContext, useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -20,45 +21,58 @@ const Body = () => {
   // console.log("Body prints", listOfRestaurants);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.1766701&lng=78.00807449999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      // https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.1766701&lng=78.00807449999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
-    );
-    const json = await data.json();
+    try {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.1766701&lng=78.00807449999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      );
 
-    // console.log(json);
-
-    // Recursive function to find the 'restaurants' array in the JSON structure
-    const findRestaurants = (obj) => {
-      if (!obj) return null;
-      
-      // Check if the current object has the 'restaurants' key which is an array
-      if (obj.hasOwnProperty('restaurants') && Array.isArray(obj.restaurants) && obj.restaurants.length > 0) {
-        return obj.restaurants;
+      if (!data.ok) {
+        throw new Error("Network response was not ok");
       }
 
-      // If it's an array, iterate through its elements
-      if (Array.isArray(obj)) {
-        for (let item of obj) {
-          const result = findRestaurants(item);
-          if (result) return result;
+      const json = await data.json();
+
+      // Recursive function to find the 'restaurants' array in the JSON structure
+      const findRestaurants = (obj) => {
+        if (!obj) return null;
+        
+        // Check if the current object has the 'restaurants' key which is an array
+        if (obj.hasOwnProperty('restaurants') && Array.isArray(obj.restaurants) && obj.restaurants.length > 0) {
+          return obj.restaurants;
         }
-      } 
-      // If it's an object, iterate through its keys
-      else if (typeof obj === 'object') {
-        for (let key in obj) {
-          const result = findRestaurants(obj[key]);
-          if (result) return result;
+
+        // If it's an array, iterate through its elements
+        if (Array.isArray(obj)) {
+          for (let item of obj) {
+            const result = findRestaurants(item);
+            if (result) return result;
+          }
+        } 
+        // If it's an object, iterate through its keys
+        else if (typeof obj === 'object') {
+          for (let key in obj) {
+            const result = findRestaurants(obj[key]);
+            if (result) return result;
+          }
         }
+
+        return null;
+      };
+
+      const restaurants = findRestaurants(json?.data?.cards);
+
+      if (restaurants) {
+        setlistOfRestaurants(restaurants);
+        setfilteredRestaurant(restaurants);
+      } else {
+        throw new Error("Restaurants not found in API response");
       }
 
-      return null;
-    };
-
-    const restaurants = findRestaurants(json?.data?.cards);
-
-    setlistOfRestaurants(restaurants);
-    setfilteredRestaurant(restaurants);
+    } catch (error) {
+      console.warn("Failed to fetch live data, using mock data fallback.", error);
+      setlistOfRestaurants(resList);
+      setfilteredRestaurant(resList);
+    }
   };
 
   if (!useOnlineStatus()) {

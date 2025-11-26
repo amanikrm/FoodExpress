@@ -4,7 +4,7 @@ import useRestaurantMenu from "../utils/useRestaurantMenu";
 import RestaurantCategory from "./RestaurantCategory";
 import { useEffect, useState } from "react";
 import { MENU_API } from "../utils/constants";
-import { MOCK_MENU_DATA } from "../utils/mockMenuData";
+import { MOCK_RES_MENU_DATA } from "../utils/mockResMenu";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
@@ -47,7 +47,7 @@ const RestaurantMenu = () => {
 
     // If all fail
     console.warn("All API calls failed. Using Mock Data as fallback.");
-    setResInfo(MOCK_MENU_DATA);
+    setResInfo(MOCK_RES_MENU_DATA);
     setError(null); // Clear error since we are showing mock data
     // setError("Failed to fetch menu data from all sources. Please check your connection or try again later.");
   };
@@ -113,8 +113,8 @@ const RestaurantMenu = () => {
   };
 
   // Use the functions to get data
-  const restaurantInfo = findRestaurantInfo(resInfo?.cards);
-  const categories = findMenuCategories(resInfo?.cards);
+  const restaurantInfo = findRestaurantInfo(resInfo?.data?.cards);
+  const categories = findMenuCategories(resInfo?.data?.cards);
 
   console.log("--- DEBUG LOGS ---");
   console.log("Full JSON:", resInfo);

